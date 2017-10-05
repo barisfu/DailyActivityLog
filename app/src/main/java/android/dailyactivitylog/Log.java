@@ -7,7 +7,7 @@ import java.util.UUID;
 /**
  * Created by Mack Costin on 25-Sep-17.
  *
- * YOU ARE UP TO PAGE 271
+ * YOU ARE UP TO PAGE 292
  */
 
 public class Log {
@@ -62,5 +62,9 @@ public class Log {
 
     public boolean getDataSaved(){
         return mIsDataSaved;
+    }
+
+    public String getPhotoFilename() {
+        return "IMG_" + getId().toString() + ".jpg";
     }
 }

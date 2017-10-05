@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.io.File;
 import java.util.List;
 
 /**
@@ -21,7 +23,6 @@ import java.util.List;
 public class LogListFragment extends Fragment {
     private RecyclerView mLogRecyclerView;
     private LogAdapter mAdapter;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_log_list, container, false);

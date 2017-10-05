@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Daily Activity Log</string>
-    <string name="activity_title">Enter a name for the activity.</string>
-    <string name="activity_title_label">Title</string>
-    <string name="activity_details_label">Details</string>
+    <string name="log_title_hint">Enter a name for the activity.</string>
+    <string name="log_title_label">Title</string>
+    <string name="log_details_label">Details</string>
     <string name="date_button_label">Pick a date</string>
     <string name="date_label">dd-mm-yyyy</string>
     <string name="date_picker_title">Date of Activity</string>
@@ -10,4 +10,6 @@
     <string name="show_subtitle">Show Subtitle</string>
     <string name="hide_subtitle">Hide Subtitle</string>
     <string name="subtitle_format">%1$s activities</string>
+    <string name="details_label">Details</string>
+
 </resources>

@@ -7,7 +7,9 @@ import android.dailyactivitylog.database.LogDbHelper;
 import android.dailyactivitylog.database.LogDbSchema.LogTable;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -100,5 +102,14 @@ public class LogStore {
                  null // orderBy
          );
          return new LogCursorWrapper(cursor);
+     }
+
+     public File getPhotoFile(Log log) {
+         File externalFilesDir = mContext
+                 .getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+         if (externalFilesDir == null) {
+             return null;
+         }
+         return new File(externalFilesDir, log.getPhotoFilename());
      }
 }
