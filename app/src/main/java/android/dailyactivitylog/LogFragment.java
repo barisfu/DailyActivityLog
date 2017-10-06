@@ -47,11 +47,12 @@ public class LogFragment extends Fragment {
     private ImageView mPhotoView;
     private File mPhotoFile;
     private Spinner mCategorySpinner;
+    private ArrayAdapter<CharSequence> mArrayAdapter;
     private static final String ARG_LOG_ID = "log_id";
     private static final String DIALOG_DATE = "DialogDate";
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_PHOTO = 2;
-    private ArrayAdapter<CharSequence> mArrayAdapter;
+
 
     public static LogFragment newInstance(UUID logId) {
         Bundle args = new Bundle();
@@ -89,7 +90,7 @@ public class LogFragment extends Fragment {
         PackageManager packageManager = getActivity().getPackageManager();
 
         mCategorySpinner = (Spinner)v.findViewById(R.id.categories_spinner);
-        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this.getContext(),
+        final ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this.getContext(),
                 R.array.categories_array, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mCategorySpinner.setAdapter(spinnerAdapter);
@@ -97,13 +98,13 @@ public class LogFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i == 0) {
-                    mLog.setCategory("Work");
+                    mLog.setCategory(adapterView.getItemAtPosition(0).toString());
                 } else if (i == 1) {
-                    mLog.setCategory("Study");
+                    mLog.setCategory(adapterView.getItemAtPosition(1).toString());
                 } else if (i == 2) {
-                    mLog.setCategory("Leisure");
+                    mLog.setCategory(adapterView.getItemAtPosition(2).toString());
                 } else if (i == 3) {
-                    mLog.setCategory("Sport");
+                    mLog.setCategory(adapterView.getItemAtPosition(3).toString());
                 }
             }
 
@@ -165,8 +166,6 @@ public class LogFragment extends Fragment {
             }
         });
 
-
-
         mSaveButton = (Button)v.findViewById(R.id.save_log_button);
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,7 +188,7 @@ public class LogFragment extends Fragment {
         mPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setSaveButton();
+                startActivityForResult(captureImage, REQUEST_PHOTO);
             }
         });
 
