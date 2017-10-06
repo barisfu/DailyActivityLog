@@ -22,7 +22,6 @@ import java.util.UUID;
   */
 public class LogStore {
     private static LogStore sLogList;
-
     private Context mContext;
     private SQLiteDatabase mDatabase;
 
@@ -77,6 +76,7 @@ public class LogStore {
      private static ContentValues getContentValues(Log log) {
          ContentValues values = new ContentValues();
          values.put(LogTable.Cols.UUID, log.getId().toString());
+         values.put(LogTable.Cols.CATEGORY, log.getCategory());
          values.put(LogTable.Cols.TITLE, log.getTitle());
          values.put(LogTable.Cols.DATE, log.getDate().getTime());
          values.put(LogTable.Cols.COMMENT, log.getCommentSection());
@@ -100,7 +100,8 @@ public class LogStore {
                  whereArgs,
                  null, // groupBy
                  null, // having
-                 null // orderBy
+                 null, // orderBy
+                 null //
          );
          return new LogCursorWrapper(cursor);
      }

@@ -13,6 +13,7 @@ public class LogDbSchema {
             public static final String TITLE = "title";
             public static final String DATE = "date";
             public static final String COMMENT = "comment";
+            public static final String CATEGORY = "category";
         }
     }
 }

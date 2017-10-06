@@ -19,10 +19,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,10 +46,12 @@ public class LogFragment extends Fragment {
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
     private File mPhotoFile;
+    private Spinner mCategorySpinner;
     private static final String ARG_LOG_ID = "log_id";
     private static final String DIALOG_DATE = "DialogDate";
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_PHOTO = 2;
+    private ArrayAdapter<CharSequence> mArrayAdapter;
 
     public static LogFragment newInstance(UUID logId) {
         Bundle args = new Bundle();
@@ -76,13 +81,51 @@ public class LogFragment extends Fragment {
         UUID logId = (UUID)getArguments().getSerializable(ARG_LOG_ID);
         mLog = LogStore.get(getActivity()).getLog(logId);
         mPhotoFile = LogStore.get(getActivity()).getPhotoFile(mLog);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_log, container, false);
         PackageManager packageManager = getActivity().getPackageManager();
+
+        mCategorySpinner = (Spinner)v.findViewById(R.id.categories_spinner);
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this.getContext(),
+                R.array.categories_array, android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mCategorySpinner.setAdapter(spinnerAdapter);
+        mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i == 0) {
+                    mLog.setCategory("Work");
+                } else if (i == 1) {
+                    mLog.setCategory("Study");
+                } else if (i == 2) {
+                    mLog.setCategory("Leisure");
+                } else if (i == 3) {
+                    mLog.setCategory("Sport");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                //Intentionally left blank
+            }
+        });
+
+
+        mDateButton = (Button)v.findViewById(R.id.date_button);
+        updateDate();
+        mDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getFragmentManager();
+                DatePickerFragment dialog = DatePickerFragment.newInstance(mLog.getDate());
+                dialog.setTargetFragment(LogFragment.this, REQUEST_DATE);
+                dialog.show(manager, DIALOG_DATE);
+                Toast.makeText(getActivity(), mLog.getCategory(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         mTitleField = (EditText)v.findViewById(R.id.log_title);
         mTitleField.setText(mLog.getTitle());
@@ -122,17 +165,7 @@ public class LogFragment extends Fragment {
             }
         });
 
-        mDateButton = (Button)v.findViewById(R.id.date_button);
-        updateDate();
-        mDateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager = getFragmentManager();
-                DatePickerFragment dialog = DatePickerFragment.newInstance(mLog.getDate());
-                dialog.setTargetFragment(LogFragment.this, REQUEST_DATE);
-                dialog.show(manager, DIALOG_DATE);
-            }
-        });
+
 
         mSaveButton = (Button)v.findViewById(R.id.save_log_button);
         mSaveButton.setOnClickListener(new View.OnClickListener() {
@@ -140,6 +173,7 @@ public class LogFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getActivity(), R.string.log_saved_confirmation, Toast.LENGTH_SHORT).show();
                 setSaveButton();
+
             }
         });
 

@@ -23,6 +23,7 @@ public class LogDbHelper extends SQLiteOpenHelper {
                 LogTable.Cols.UUID + ", " +
                 LogTable.Cols.TITLE + ", " +
                 LogTable.Cols.DATE + ", " +
+                LogTable.Cols.CATEGORY + "," +
                 LogTable.Cols.COMMENT +
                 ")"
         );

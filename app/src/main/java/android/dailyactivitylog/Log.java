@@ -30,6 +30,14 @@ public class Log {
         mFormattedDate = DateFormat.format("dd-MM-yyyy", mDate).toString();
     }
 
+    public void setCategory(String category){
+        mCategory = category;
+    }
+
+    public String getCategory(){
+        return mCategory;
+    }
+
     public UUID getId() {
         return mId;
     }

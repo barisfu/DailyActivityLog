@@ -21,6 +21,7 @@ public class LogCursorWrapper extends CursorWrapper {
         String uuidString = getString(getColumnIndex(LogTable.Cols.UUID));
         String title = getString(getColumnIndex(LogTable.Cols.TITLE));
         String comment = getString(getColumnIndex(LogTable.Cols.COMMENT));
+        String category = getString(getColumnIndex(LogTable.Cols.CATEGORY));
         long date = getLong(getColumnIndex(LogTable.Cols.DATE));
 
         Log log = new Log(UUID.fromString(uuidString));

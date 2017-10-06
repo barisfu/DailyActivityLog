@@ -70,17 +70,20 @@ public class LogListFragment extends Fragment {
         private Log mLog;
         private TextView mTitleTextView;
         private TextView mDateTextView;
+        private TextView mCategoryTextView;
 
         public LogHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
 
             mTitleTextView = (TextView)itemView.findViewById(R.id.list_item_log_title_text_view);
+            mCategoryTextView = (TextView)itemView.findViewById(R.id.list_item_category_text_view);
             mDateTextView = (TextView)itemView.findViewById(R.id.list_item_log_date_text_view);
         }
 
         public void bindLog(Log log) {
             mLog = log;
+            mCategoryTextView.setText("Type: " + mLog.getCategory());
             mTitleTextView.setText(mLog.getTitle());
             mDateTextView.setText(mLog.getFormattedDate());
         }

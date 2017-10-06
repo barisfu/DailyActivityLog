@@ -52,12 +52,13 @@
             android:layout_marginRight="16dp"
             android:hint="@string/log_title_hint"/>
 
-        <Button
-            android:id="@+id/select_category_button"
+        <Spinner
+            android:id="@+id/categories_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
-            android:text="@string/category_selection_string"/>
+            android:entries="@array/categories_array">
+
+        </Spinner>
 
     </LinearLayout>
 
