@@ -79,6 +79,7 @@ public class LogStore {
          values.put(LogTable.Cols.UUID, log.getId().toString());
          values.put(LogTable.Cols.TITLE, log.getTitle());
          values.put(LogTable.Cols.DATE, log.getDate().getTime());
+         values.put(LogTable.Cols.COMMENT, log.getCommentSection());
 
          return values;
      }
@@ -112,4 +113,10 @@ public class LogStore {
          }
          return new File(externalFilesDir, log.getPhotoFilename());
      }
+
+     public void deleteLog(UUID logId) {
+         String uuid = logId.toString();
+         mDatabase.delete(LogTable.NAME, LogTable.Cols.UUID + " =?", new String[]{uuid});
+     }
+
 }

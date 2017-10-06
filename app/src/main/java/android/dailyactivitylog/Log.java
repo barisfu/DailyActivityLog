@@ -13,8 +13,10 @@ import java.util.UUID;
 public class Log {
     private UUID mId;
     private String mTitle;
+    private String mCommentSection;
     private Date mDate;
     private String mFormattedDate;
+    private String mCategory;
     private boolean mIsDataSaved;
 
     public Log() {
@@ -38,6 +40,14 @@ public class Log {
 
     public void setTitle(String title) {
         mTitle = title;
+    }
+
+    public void setCommentSection(String comment) {
+        mCommentSection = comment;
+    }
+
+    public String getCommentSection() {
+        return mCommentSection;
     }
 
     public void setDate(Date date) {

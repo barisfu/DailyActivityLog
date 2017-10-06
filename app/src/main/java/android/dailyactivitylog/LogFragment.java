@@ -1,6 +1,7 @@
 package android.dailyactivitylog;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -13,6 +14,9 @@ import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.Date;
@@ -32,8 +37,9 @@ import java.util.UUID;
 public class LogFragment extends Fragment {
     private Log mLog;
     private EditText mTitleField;
+    private EditText mComment;
     private Button mDateButton;
-    private TextView mActivityDateField;
+    private Button mSaveButton;
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
     private File mPhotoFile;
@@ -66,9 +72,11 @@ public class LogFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         UUID logId = (UUID)getArguments().getSerializable(ARG_LOG_ID);
         mLog = LogStore.get(getActivity()).getLog(logId);
         mPhotoFile = LogStore.get(getActivity()).getPhotoFile(mLog);
+
     }
 
     @Override
@@ -95,6 +103,25 @@ public class LogFragment extends Fragment {
             }
         });
 
+        mComment = (EditText)v.findViewById(R.id.comment_edittext);
+        mComment.setText(mLog.getCommentSection());
+        mComment.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mLog.setCommentSection(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         mDateButton = (Button)v.findViewById(R.id.date_button);
         updateDate();
         mDateButton.setOnClickListener(new View.OnClickListener() {
@@ -107,20 +134,28 @@ public class LogFragment extends Fragment {
             }
         });
 
+        mSaveButton = (Button)v.findViewById(R.id.save_log_button);
+        mSaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), R.string.log_saved_confirmation, Toast.LENGTH_SHORT).show();
+                setSaveButton();
+            }
+        });
+
         mPhotoButton = (ImageButton) v.findViewById(R.id.log_camera);
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         boolean canTakePhoto = mPhotoFile != null &&
                 captureImage.resolveActivity(packageManager) != null;
         mPhotoButton.setEnabled(canTakePhoto);
         if (canTakePhoto) {
-            //Uri uri = Uri.fromFile(mPhotoFile);
             Uri uri = FileProvider.getUriForFile(getContext(), BuildConfig.APPLICATION_ID + ".provider", mPhotoFile);
             captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         }
         mPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(captureImage, REQUEST_PHOTO);
+                setSaveButton();
             }
         });
 
@@ -128,6 +163,15 @@ public class LogFragment extends Fragment {
         updatePhotoView();
 
         return v;
+    }
+
+    /**
+     * Creates a method for the save button to be used to bring the user back
+     * to the Log List Activity.
+     */
+    public void setSaveButton() {
+        Intent intent = new Intent (this.getContext(), LogListActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -155,6 +199,30 @@ public class LogFragment extends Fragment {
         super.onPause();
         LogStore.get(getActivity())
                 .updateLog(mLog);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_log_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.menu_delete_log:
+                UUID logId = mLog.getId();
+                LogStore.get(getActivity()).deleteLog(logId);
+
+                Toast.makeText(getActivity(), R.string.toast_deleted_confirmation, Toast.LENGTH_SHORT)
+                        .show();
+                getActivity().finish();
+
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

@@ -11,5 +11,17 @@
     <string name="hide_subtitle">Hide Subtitle</string>
     <string name="subtitle_format">%1$s activities</string>
     <string name="details_label">Details</string>
+    <string name="delete_button">Delete Log</string>
+    <string name="toast_deleted_confirmation">Log Deleted</string>
+    <string name="save_log_button">Save Log</string>
+    <string name="edittext_comment_section">Enter a comment here</string>
+    <string name="category_selection_string">Pick a category</string>
+    <string name="log_saved_confirmation">Log Saved</string>
+    <string-array name="categories_array">
+        <item>Work</item>
+        <item>Study</item>
+        <item>Leisure</item>
+        <item>Sport</item>
+    </string-array>
 
 </resources>

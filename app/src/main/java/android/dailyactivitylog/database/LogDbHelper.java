@@ -22,7 +22,8 @@ public class LogDbHelper extends SQLiteOpenHelper {
                 " _id integer primary key autoincrement, " +
                 LogTable.Cols.UUID + ", " +
                 LogTable.Cols.TITLE + ", " +
-                LogTable.Cols.DATE +
+                LogTable.Cols.DATE + ", " +
+                LogTable.Cols.COMMENT +
                 ")"
         );
     }
