@@ -197,7 +197,7 @@ public class LogFragment extends Fragment {
 
         return v;
     }
-
+//PLACEHOLDER
     /**
      * Creates a method for the save button to be used to bring the user back
      * to the Log List Activity.
