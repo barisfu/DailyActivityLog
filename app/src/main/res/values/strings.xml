@@ -25,6 +25,9 @@
     <string name="text_display_gender">Gender: </string>
     <string name="text_spinner_gender_hint">Select your gender</string>
     <string name="text_settings">Settings</string>
+    <string name="text_enter_email">Enter your email here</string>
+    <string name="text_display_email">Email: </string>
+    <string name="text_save_user">Save User</string>
 
     <string-array name="gender_array">
         <item>Male</item>
