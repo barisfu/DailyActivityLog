@@ -28,6 +28,7 @@ public class LogCursorWrapper extends CursorWrapper {
         log.setCommentSection(comment);
         log.setTitle(title);
         log.setDate(new Date(date));
+        log.setCategory(category);
 
         return log;
     }

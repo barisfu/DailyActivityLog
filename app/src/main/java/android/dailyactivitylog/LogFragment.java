@@ -90,6 +90,7 @@ public class LogFragment extends Fragment {
         PackageManager packageManager = getActivity().getPackageManager();
 
         mCategorySpinner = (Spinner)v.findViewById(R.id.categories_spinner);
+
         final ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this.getContext(),
                 R.array.categories_array, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -97,6 +98,7 @@ public class LogFragment extends Fragment {
         mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
                 if(i == 0) {
                     mLog.setCategory(adapterView.getItemAtPosition(0).toString());
                 } else if (i == 1) {
@@ -106,6 +108,9 @@ public class LogFragment extends Fragment {
                 } else if (i == 3) {
                     mLog.setCategory(adapterView.getItemAtPosition(3).toString());
                 }
+
+
+
             }
 
             @Override
@@ -197,7 +202,7 @@ public class LogFragment extends Fragment {
 
         return v;
     }
-//PLACEHOLDER
+
     /**
      * Creates a method for the save button to be used to bring the user back
      * to the Log List Activity.
