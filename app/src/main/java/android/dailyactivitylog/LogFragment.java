@@ -26,7 +26,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -47,7 +46,6 @@ public class LogFragment extends Fragment {
     private ImageView mPhotoView;
     private File mPhotoFile;
     private Spinner mCategorySpinner;
-    private ArrayAdapter<CharSequence> mArrayAdapter;
     private static final String ARG_LOG_ID = "log_id";
     private static final String DIALOG_DATE = "DialogDate";
     private static final int REQUEST_DATE = 0;
@@ -98,7 +96,6 @@ public class LogFragment extends Fragment {
         mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
                 if(i == 0) {
                     mLog.setCategory(adapterView.getItemAtPosition(0).toString());
                 } else if (i == 1) {
@@ -108,9 +105,6 @@ public class LogFragment extends Fragment {
                 } else if (i == 3) {
                     mLog.setCategory(adapterView.getItemAtPosition(3).toString());
                 }
-
-
-
             }
 
             @Override

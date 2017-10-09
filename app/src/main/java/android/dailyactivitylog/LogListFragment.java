@@ -61,6 +61,10 @@ public class LogListFragment extends Fragment {
                 Intent intent = LogPagerActivity.newIntent(getActivity(), log.getId());
                 startActivity(intent);
                 return true;
+            case R.id.menu_item_settings:
+                User user = new User();
+                Intent startUserCreation = new Intent(getContext(), UserActivity.class);
+                startActivity(startUserCreation);
             default:
                 return super.onOptionsItemSelected(item);
         }

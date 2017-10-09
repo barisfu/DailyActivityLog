@@ -17,11 +17,26 @@
     <string name="edittext_comment_section">Enter a comment here</string>
     <string name="category_selection_string">Pick a category</string>
     <string name="log_saved_confirmation">Log Saved</string>
+    <string name="text_enter_a_username">Enter your name</string>
+    <string name="text_display_username">Your username: </string>
+    <string name="text_enter_a_id">Enter an ID</string>
+    <string name="text_display_id">Your ID: </string>
+    <string name="text_select_gender">Select Gender</string>
+    <string name="text_display_gender">Gender: </string>
+    <string name="text_spinner_gender_hint">Select your gender</string>
+    <string name="text_settings">Settings</string>
+
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
     <string-array name="categories_array">
         <item>Work</item>
         <item>Study</item>
         <item>Leisure</item>
         <item>Sport</item>
     </string-array>
+
 
 </resources>
