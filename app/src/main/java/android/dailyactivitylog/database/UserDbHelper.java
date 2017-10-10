@@ -3,8 +3,10 @@ package android.dailyactivitylog.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.dailyactivitylog.User;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.Settings;
 import android.util.Log;
 import android.dailyactivitylog.database.LogDbSchema.UserTable;
 
@@ -38,28 +40,32 @@ public class UserDbHelper extends SQLiteOpenHelper {
      * @param user
      */
     public void addUser(User user) {
-        Log.d("addUser", user.toString());
-
         ContentValues values = new ContentValues();
         values.put(UserTable.Cols.USERNAME, user.getUserName());
         values.put(UserTable.Cols.USER_EMAIL, user.getUserEmail());
         values.put(UserTable.Cols.USER_GENDER, user.getUserGender());
         values.put(UserTable.Cols.USER_ID, user.getUserId());
         values.put(UserTable.Cols.USER_COMMENT, user.getUserComment());
+        Log.d("addUser", user.toString() + " " + UserTable.Cols.USERNAME.toString());
     }
 
-    public void deleteUser(String username) {
+    public void deleteUser(User user) {
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + UserTable.NAME + " WHERE " + UserTable.Cols.USERNAME + "=\"" + username + "\";");
+        db.execSQL(" DELETE FROM " + UserTable.NAME);
     }
 
-    public String databaseToString() {
-        String dbToString = "";
+    public String assignUserName() {
         SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM" + UserTable.NAME + "WHERE 1";
+        String userName = new String();
 
-
+        Cursor cursor = db.rawQuery("SELECT * FROM " + UserTable.NAME, null);
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            userName = cursor.getString(cursor.getColumnIndex(UserTable.Cols.USERNAME));
+        }
+        return userName;
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){

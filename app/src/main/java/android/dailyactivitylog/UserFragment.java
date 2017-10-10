@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.*;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,13 +50,24 @@ public class UserFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final UserDbHelper userDbHelper = new UserDbHelper(getContext());
+
+        mUser.setUserName(userDbHelper.assignUserName());
+        Log.d("assignUserNameUsed  ", userDbHelper.assignUserName());
 
         View v = inflater.inflate(R.layout.fragment_usercreation, container, false);
 
         mDisplayUserId = (TextView)v.findViewById(R.id.textview_id);
+        mDisplayUserId.setText(mUser.getUserId());
+
         mDisplayUserName = (TextView)v.findViewById(R.id.textview_username);
+        mDisplayUserName.setText(mUser.getUserName());
+
         mDisplayUserGender = (TextView)v.findViewById(R.id.textview_gender);
+        mDisplayUserGender.setText(mUser.getUserGender());
+
         mDisplayUserEmail = (TextView)v.findViewById(R.id.textview_display_email);
+        mDisplayUserEmail.setText(mUser.getUserEmail());
 
         final ArrayAdapter<CharSequence> genderSpinnerAdapter = ArrayAdapter.createFromResource
                 (this.getContext(),R.array.gender_array, android.R.layout.
@@ -141,7 +153,8 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "User Details Saved", Toast.LENGTH_SHORT).show();
-                saveUserDetails();
+                userDbHelper.deleteUser(mUser);
+                userDbHelper.addUser(mUser);
             }
         });
 
@@ -183,10 +196,5 @@ public class UserFragment extends Fragment {
         });
 
         return v;
-    }
-
-    public void saveUserDetails(){
-        UserDbHelper userDbHelper = new UserDbHelper(getContext());
-        userDbHelper.addUser(mUser);
     }
 }
