@@ -1,0 +1,107 @@
+package android.dailyactivitylog;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.dailyactivitylog.database.DbHelper;
+import android.dailyactivitylog.database.LogCursorWrapper;
+import android.dailyactivitylog.database.LogDbSchema;
+import android.dailyactivitylog.database.UserCursorWrapper;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.dailyactivitylog.database.LogDbSchema.UserTable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * Created by mdc010 on 12/10/2017.
+ */
+
+public class UserStore {
+    private static UserStore sUserList;
+    private Context mContext;
+    private SQLiteDatabase mDatabase;
+
+    public static UserStore get(Context context) {
+        if (sUserList == null) {
+            sUserList = new UserStore(context);
+        }
+        return sUserList;
+    }
+
+    private UserStore(Context context) {
+        mContext = context.getApplicationContext();
+        mDatabase = new DbHelper(mContext).getWritableDatabase();
+    }
+
+    public List<User> getUsers() {
+        List<User> users = new ArrayList<>();
+        UserCursorWrapper cursor = queryUsers(null, null);
+        try{
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast()) {
+                users.add(cursor.getUser());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+    return users;
+    }
+
+    public User getUser(UUID id) {
+        UserCursorWrapper cursor = queryUsers(
+                UserTable.Cols.UUID + " = ?",
+                new String[]{id.toString()}
+        );
+        try {
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+            cursor.moveToFirst();
+            return cursor.getUser();
+        } finally {
+            cursor.close();
+        }
+    }
+
+    public void addUser(User u) {
+        ContentValues values = getContentValues(u);
+        mDatabase.insert(UserTable.NAME, null, values);
+    }
+
+    private static ContentValues getContentValues(User user) {
+        ContentValues values = new ContentValues();
+        values.put(UserTable.Cols.UUID, user.getUUID().toString());
+        values.put(UserTable.Cols.USERNAME, user.getUserName());
+        values.put(UserTable.Cols.USER_EMAIL, user.getUserEmail());
+        values.put(UserTable.Cols.USER_GENDER, user.getUserGender());
+        values.put(UserTable.Cols.USER_COMMENT, user.getUserComment());
+        values.put(UserTable.Cols.USER_ID, user.getUserId());
+
+        return values;
+    }
+
+    public void updateUser(User user) {
+        String uuidString = user.getUUID().toString();
+        ContentValues values = getContentValues(user);
+        mDatabase.update(UserTable.NAME, values,
+                UserTable.Cols.UUID + " = ?",
+                new String[] { uuidString });
+    }
+
+    private UserCursorWrapper queryUsers(String whereClause, String[] whereArgs) {
+        Cursor cursor = mDatabase.query(
+                UserTable.NAME,
+                null,
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                null,
+                null
+        );
+        return new UserCursorWrapper(cursor);
+    }
+
+}

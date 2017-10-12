@@ -1,5 +1,6 @@
 package android.dailyactivitylog;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Mack on 26-Sep-17.
@@ -23,6 +25,7 @@ import java.util.List;
 public class LogListFragment extends Fragment {
     private RecyclerView mLogRecyclerView;
     private LogAdapter mAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_log_list, container, false);
@@ -63,7 +66,7 @@ public class LogListFragment extends Fragment {
                 return true;
             case R.id.menu_item_settings:
                 User user = new User();
-                Intent startUserCreation = new Intent(getContext(), UserActivity.class);
+                Intent startUserCreation = UserActivity.newIntent(getActivity(), user.getUUID());
                 startActivity(startUserCreation);
             default:
                 return super.onOptionsItemSelected(item);

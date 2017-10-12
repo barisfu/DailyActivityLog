@@ -3,7 +3,7 @@ package android.dailyactivitylog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.dailyactivitylog.database.LogCursorWrapper;
-import android.dailyactivitylog.database.LogDbHelper;
+import android.dailyactivitylog.database.DbHelper;
 import android.dailyactivitylog.database.LogDbSchema.LogTable;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -34,7 +34,7 @@ public class LogStore {
 
     private LogStore(Context context){
         mContext = context.getApplicationContext();
-        mDatabase = new LogDbHelper(mContext).getWritableDatabase();
+        mDatabase = new DbHelper(mContext).getWritableDatabase();
     }
 
     public List<Log> getLogs() {

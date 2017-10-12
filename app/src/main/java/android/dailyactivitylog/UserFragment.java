@@ -1,16 +1,9 @@
 package android.dailyactivitylog;
 
-import android.content.ContentValues;
-import android.dailyactivitylog.database.LogDbHelper;
-import android.dailyactivitylog.database.LogDbSchema;
-import android.dailyactivitylog.database.UserDbHelper;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.*;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Mack on 09-Oct-17.
@@ -30,6 +23,7 @@ import java.util.List;
 
 public class UserFragment extends Fragment {
     private User mUser;
+    private UserStore mUserStore;
     private TextView mDisplayUserName;
     private TextView mDisplayUserId;
     private TextView mDisplayUserGender;
@@ -40,21 +34,28 @@ public class UserFragment extends Fragment {
     private EditText mUserComment;
     private Spinner mSelectUserGender;
     private Button mSaveDetailsButton;
+    private static final String ARG_USER_ID = "user_id";
+
+    public static UserFragment newInstance(UUID userId) {
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_USER_ID, userId);
+
+        UserFragment fragment = new UserFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUser = new User();
+        UUID userId = (UUID)getArguments().getSerializable(ARG_USER_ID);
+        mUser = UserStore.get(getActivity()).getUser(userId);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final UserDbHelper userDbHelper = new UserDbHelper(getContext());
-
-        mUser = userDbHelper.assignUser();
-        Log.d("assignUser  ", " ");
-
         View v = inflater.inflate(R.layout.fragment_usercreation, container, false);
 
         mDisplayUserId = (TextView)v.findViewById(R.id.textview_id);
@@ -102,13 +103,13 @@ public class UserFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mUser.setUserName(charSequence.toString());
-                mDisplayUserName.setText("User name: " + mUser.getUserName());
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                mUser.setUserName(editable.toString());
+                mDisplayUserName.setText("User name: " + mUser.getUserName());
             }
         });
 
@@ -153,8 +154,6 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "User Details Saved", Toast.LENGTH_SHORT).show();
-                userDbHelper.deleteUser(mUser);
-                userDbHelper.addUser(mUser);
             }
         });
 
@@ -194,7 +193,13 @@ public class UserFragment extends Fragment {
 
             }
         });
-
         return v;
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        UserStore.get(getActivity()).updateUser(mUser);
+    }
+
 }

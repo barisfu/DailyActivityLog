@@ -1,7 +1,6 @@
 package android.dailyactivitylog;
 
-import android.content.Context;
-import android.dailyactivitylog.database.LogDbHelper;
+import android.dailyactivitylog.database.DbHelper;
 
 import java.util.UUID;
 
@@ -10,12 +9,25 @@ import java.util.UUID;
  */
 
 public class User {
-    private String mUserName;
+    private UUID mUUID;
+    private String mUserName = "Username: Mack ";
     private String mUserId = "ID: 1B23TH";
     private String mUserGender = "Gender: Male";
     private String mUserEmail = "Email: sampleEmail@sampleEmail.com";
-    private String mUserComment;
-    private LogDbHelper dbHelper;
+    private String mUserComment = "Comment";
+    private DbHelper dbHelper;
+
+    public User() {
+        this(UUID.randomUUID());
+    }
+
+    public User(UUID uuid) {
+        mUUID = uuid;
+    }
+
+    public UUID getUUID() {
+        return mUUID;
+    }
 
    public void setUserEmail(String email) {
        mUserEmail = email;
@@ -56,4 +68,5 @@ public class User {
     public String getUserComment() {
         return mUserComment;
     }
+
 }
