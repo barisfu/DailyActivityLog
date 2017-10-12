@@ -50,8 +50,7 @@ public class UserFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UUID userId = (UUID)getArguments().getSerializable(ARG_USER_ID);
-        mUser = UserStore.get(getActivity()).getUser(userId);
+        mUser = new User();
     }
 
     @Override

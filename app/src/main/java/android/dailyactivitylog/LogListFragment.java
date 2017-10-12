@@ -66,7 +66,7 @@ public class LogListFragment extends Fragment {
                 return true;
             case R.id.menu_item_settings:
                 User user = new User();
-                Intent startUserCreation = UserActivity.newIntent(getActivity(), user.getUUID());
+                Intent startUserCreation = new Intent(getContext(), UserActivity.class);
                 startActivity(startUserCreation);
             default:
                 return super.onOptionsItemSelected(item);
