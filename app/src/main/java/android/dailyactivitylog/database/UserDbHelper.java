@@ -54,16 +54,16 @@ public class UserDbHelper extends SQLiteOpenHelper {
         db.execSQL(" DELETE FROM " + UserTable.NAME);
     }
 
-    public String assignUserName() {
+    public User assignUser() {
+        User user = new User();
         SQLiteDatabase db = getWritableDatabase();
-        String userName = new String();
-
         Cursor cursor = db.rawQuery("SELECT * FROM " + UserTable.NAME, null);
+        UserCursorWrapper cursorWrapper = new UserCursorWrapper(cursor);
         if(cursor.getCount() > 0) {
             cursor.moveToFirst();
-            userName = cursor.getString(cursor.getColumnIndex(UserTable.Cols.USERNAME));
+            user = cursorWrapper.getUser();
         }
-        return userName;
+        return user;
     }
 
 

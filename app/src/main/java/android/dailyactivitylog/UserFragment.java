@@ -52,8 +52,8 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final UserDbHelper userDbHelper = new UserDbHelper(getContext());
 
-        mUser.setUserName(userDbHelper.assignUserName());
-        Log.d("assignUserNameUsed  ", userDbHelper.assignUserName());
+        mUser = userDbHelper.assignUser();
+        Log.d("assignUser  ", " ");
 
         View v = inflater.inflate(R.layout.fragment_usercreation, container, false);
 
