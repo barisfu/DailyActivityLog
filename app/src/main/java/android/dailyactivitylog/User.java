@@ -9,7 +9,6 @@ import java.util.UUID;
  */
 
 public class User {
-    private UUID mUUID;
     private String mUserName = "Username: Mack ";
     private String mUserId = "ID: 1B23TH";
     private String mUserGender = "Gender: Male";
@@ -17,18 +16,9 @@ public class User {
     private String mUserComment = "Comment";
     private DbHelper dbHelper;
 
-    public User() {
-        this(UUID.randomUUID());
+    public User(String userId) {
+        mUserId = userId;
     }
-
-    public User(UUID uuid) {
-        mUUID = uuid;
-    }
-
-    public UUID getUUID() {
-        return mUUID;
-    }
-
    public void setUserEmail(String email) {
        mUserEmail = email;
    }

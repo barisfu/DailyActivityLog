@@ -34,7 +34,6 @@ public class DbHelper extends SQLiteOpenHelper {
         );
         db.execSQL("create table " + LogDbSchema.UserTable.NAME + "(" +
                 " _id integer primary key autoincrement, " +
-                UserTable.Cols.UUID + ", " +
                 UserTable.Cols.USERNAME + ", " +
                 UserTable.Cols.USER_EMAIL + ", " +
                 UserTable.Cols.USER_GENDER + ", " +

@@ -49,9 +49,9 @@ public class UserStore {
     return users;
     }
 
-    public User getUser(UUID id) {
+    public User getUser(String id) {
         UserCursorWrapper cursor = queryUsers(
-                UserTable.Cols.UUID + " = ?",
+                UserTable.Cols.USER_ID + " = ?",
                 new String[]{id.toString()}
         );
         try {
@@ -72,7 +72,6 @@ public class UserStore {
 
     private static ContentValues getContentValues(User user) {
         ContentValues values = new ContentValues();
-        values.put(UserTable.Cols.UUID, user.getUUID().toString());
         values.put(UserTable.Cols.USERNAME, user.getUserName());
         values.put(UserTable.Cols.USER_EMAIL, user.getUserEmail());
         values.put(UserTable.Cols.USER_GENDER, user.getUserGender());
@@ -83,10 +82,10 @@ public class UserStore {
     }
 
     public void updateUser(User user) {
-        String uuidString = user.getUUID().toString();
+        String uuidString = user.getUserId();
         ContentValues values = getContentValues(user);
         mDatabase.update(UserTable.NAME, values,
-                UserTable.Cols.UUID + " = ?",
+                UserTable.Cols.USER_ID + " = ?",
                 new String[] { uuidString });
     }
 

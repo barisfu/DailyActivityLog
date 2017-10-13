@@ -17,16 +17,15 @@ public class UserCursorWrapper extends CursorWrapper {
     }
 
     public User getUser() {
-        String uuidString = getString(getColumnIndex(UserTable.Cols.UUID));
+
         String username = getString(getColumnIndex(UserTable.Cols.USERNAME));
         String id = getString(getColumnIndex(UserTable.Cols.USER_ID));
         String email = getString(getColumnIndex(UserTable.Cols.USER_EMAIL));
         String gender = getString(getColumnIndex(UserTable.Cols.USER_GENDER));
         String comment = getString(getColumnIndex(UserTable.Cols.USER_COMMENT));
 
-        User user = new User(UUID.fromString(uuidString));
+        User user = new User(id);
         user.setUserName(username);
-        user.setUserId(id);
         user.setUserEmail(email);
         user.setUserGender(gender);
         user.setUserComment(comment);

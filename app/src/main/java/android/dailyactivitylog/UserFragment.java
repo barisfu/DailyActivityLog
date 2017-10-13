@@ -50,7 +50,11 @@ public class UserFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUser = new User();
+        if(UserStore.get(getActivity()).getUser("123") == null){
+            mUser = new User("123");
+        } else {
+            mUser = UserStore.get(getActivity()).getUser("123");
+        }
     }
 
     @Override
@@ -198,7 +202,10 @@ public class UserFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        UserStore.get(getActivity()).updateUser(mUser);
+        if(UserStore.get(getActivity()).getUser("123") != null) {
+            UserStore.get(getActivity()).updateUser(mUser);
+        } else {
+            UserStore.get(getActivity()).addUser(mUser);
+        }
     }
-
 }

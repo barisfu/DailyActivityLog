@@ -22,7 +22,6 @@ public class LogDbSchema {
         public static final String NAME = "users";
 
         public static final class Cols {
-            public static final String UUID = "uuid";
             public static final String USERNAME = "username";
             public static final String USER_ID = "id";
             public static final String USER_EMAIL = "email";
