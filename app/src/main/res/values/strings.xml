@@ -28,6 +28,9 @@
     <string name="text_enter_email">Enter your email here</string>
     <string name="text_display_email">Email: </string>
     <string name="text_save_user">Save User</string>
+    <string name="text_comment_section"><b>Comment</b></string>
+    <string name="text_add_user_section"><b>Create a new user here</b></string>
+    <string name="text_log_location">Location: </string>
 
     <string-array name="gender_array">
         <item>Male</item>

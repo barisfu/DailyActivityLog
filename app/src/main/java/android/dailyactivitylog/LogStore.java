@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.dailyactivitylog.database.LogCursorWrapper;
 import android.dailyactivitylog.database.DbHelper;
-import android.dailyactivitylog.database.LogDbSchema.LogTable;
+import android.dailyactivitylog.database.DbSchemas.LogTable;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;

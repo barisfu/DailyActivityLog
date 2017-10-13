@@ -1,7 +1,7 @@
 package android.dailyactivitylog.database;
 
 import android.dailyactivitylog.Log;
-import android.dailyactivitylog.database.LogDbSchema.LogTable;
+import android.dailyactivitylog.database.DbSchemas.LogTable;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 

@@ -40,46 +40,18 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"/>
 
-
-
-    <EditText
-        android:id="@+id/edittext_username_entry"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
-        android:hint="@string/text_enter_a_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <EditText
-        android:id="@+id/edittext_email_entry"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
-        android:hint="@string/text_enter_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:id="@+id/edittext_id_entry"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
-        android:hint="@string/text_enter_a_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
     <TextView
         android:layout_marginLeft="6dp"
         android:layout_marginRight="6dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/text_spinner_gender_hint"/>
-
-    <Spinner
-        android:id="@+id/spinner_select_gender"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
-        android:tooltipText="@string/text_spinner_gender_hint"
-        android:layout_width="match_parent"
+        android:text="@string/text_comment_section"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
 
     <EditText
         android:id="@+id/edittext_user_comment"
@@ -89,14 +61,57 @@
         android:layout_height="wrap_content"
         android:hint="@string/edittext_comment_section"/>
 
-    <Button
-        android:id="@+id/button_save_user"
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:text="@string/text_save_user"
-        android:background="@android:color/holo_green_dark"
-        android:layout_marginTop="180dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp">
+
+        <TextView
+            android:text="@string/text_add_user_section"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <EditText
+            android:id="@+id/edittext_username_entry"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:hint="@string/text_enter_a_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/edittext_email_entry"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:hint="@string/text_enter_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_spinner_gender_hint"/>
+
+        <Spinner
+            android:id="@+id/spinner_select_gender"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:tooltipText="@string/text_spinner_gender_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
 </LinearLayout>

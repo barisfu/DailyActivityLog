@@ -1,7 +1,6 @@
 package android.dailyactivitylog;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -26,7 +25,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.Date;
@@ -38,6 +40,7 @@ import java.util.UUID;
 
 public class LogFragment extends Fragment {
     private Log mLog;
+    private TextView mLocation;
     private EditText mTitleField;
     private EditText mComment;
     private Button mDateButton;
@@ -87,8 +90,11 @@ public class LogFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_log, container, false);
         PackageManager packageManager = getActivity().getPackageManager();
 
-        mCategorySpinner = (Spinner)v.findViewById(R.id.categories_spinner);
 
+        mLocation = (TextView)v.findViewById(R.id.textview_location);
+
+
+        mCategorySpinner = (Spinner)v.findViewById(R.id.categories_spinner);
         final ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this.getContext(),
                 R.array.categories_array, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

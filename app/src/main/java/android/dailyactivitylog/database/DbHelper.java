@@ -3,8 +3,8 @@ package android.dailyactivitylog.database;
 
 import android.content.Context;
 
-import android.dailyactivitylog.database.LogDbSchema.LogTable;
-import android.dailyactivitylog.database.LogDbSchema.UserTable;
+import android.dailyactivitylog.database.DbSchemas.LogTable;
+import android.dailyactivitylog.database.DbSchemas.UserTable;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -32,7 +32,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 LogTable.Cols.COMMENT +
                 ")"
         );
-        db.execSQL("create table " + LogDbSchema.UserTable.NAME + "(" +
+        db.execSQL("create table " + DbSchemas.UserTable.NAME + "(" +
                 " _id integer primary key autoincrement, " +
                 UserTable.Cols.USERNAME + ", " +
                 UserTable.Cols.USER_EMAIL + ", " +

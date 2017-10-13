@@ -38,7 +38,9 @@
             android:name=".LogPagerActivity"
             android:parentActivityName=".LogListActivity">
         </activity>
-        <activity android:name=".UserActivity">
+        <activity
+            android:name=".UserActivity"
+            android:parentActivityName=".LogListActivity">
         </activity>
     </application>
 

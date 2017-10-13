@@ -9,12 +9,11 @@ import java.util.UUID;
  */
 
 public class User {
-    private String mUserName = "Username: Mack ";
-    private String mUserId = "ID: 1B23TH";
-    private String mUserGender = "Gender: Male";
-    private String mUserEmail = "Email: sampleEmail@sampleEmail.com";
+    private String mUserName = "Example Username ";
+    private String mUserId = "ExampleID";
+    private String mUserGender = "Male";
+    private String mUserEmail = "sampleEmail@sampleEmail.com";
     private String mUserComment = "Comment";
-    private DbHelper dbHelper;
 
     public User(String userId) {
         mUserId = userId;
@@ -29,10 +28,6 @@ public class User {
 
     public void setUserName(String userName) {
         mUserName = userName;
-    }
-
-    public void setUserId(String userId) {
-        mUserId = userId;
     }
 
     public void setUserGender(String userGender) {

@@ -3,9 +3,7 @@ package android.dailyactivitylog.database;
 import android.dailyactivitylog.User;
 import android.database.Cursor;
 import android.database.CursorWrapper;
-import android.dailyactivitylog.database.LogDbSchema.UserTable;
-
-import java.util.UUID;
+import android.dailyactivitylog.database.DbSchemas.UserTable;
 
 /**
  * Created by mdc010 on 9/10/2017.
