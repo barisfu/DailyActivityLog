@@ -61,7 +61,7 @@ public class LogListFragment extends Fragment {
             case R.id.menu_item_new_log:
                 Log log = new Log();
                 LogStore.get(getActivity()).addLog(log);
-                Intent intent = LogPagerActivity.newIntent(getActivity(), log.getId());
+                Intent intent = LogActivity.newIntent(getActivity(), log.getId());
                 startActivity(intent);
                 return true;
             case R.id.menu_item_settings:
@@ -96,7 +96,7 @@ public class LogListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            Intent intent = LogPagerActivity.newIntent(getActivity(), mLog.getId());
+            Intent intent = LogActivity.newIntent(getActivity(), mLog.getId());
             startActivity(intent);
         }
 

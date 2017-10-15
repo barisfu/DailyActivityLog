@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,7 +28,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.w3c.dom.Text;
 
 import java.io.File;
@@ -40,11 +40,11 @@ import java.util.UUID;
 
 public class LogFragment extends Fragment {
     private Log mLog;
-    private TextView mLocation;
     private EditText mTitleField;
     private EditText mComment;
     private Button mDateButton;
     private Button mSaveButton;
+    private Button mLocationButton;
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
     private File mPhotoFile;
@@ -53,6 +53,7 @@ public class LogFragment extends Fragment {
     private static final String DIALOG_DATE = "DialogDate";
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_PHOTO = 2;
+
 
 
     public static LogFragment newInstance(UUID logId) {
@@ -86,12 +87,17 @@ public class LogFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_log, container, false);
         PackageManager packageManager = getActivity().getPackageManager();
 
-
-        mLocation = (TextView)v.findViewById(R.id.textview_location);
+        mLocationButton = (Button)v.findViewById(R.id.button_location);
+        mLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((LogActivity)getActivity()).replaceFragments(GmapFragment.class);
+            }
+        });
 
 
         mCategorySpinner = (Spinner)v.findViewById(R.id.categories_spinner);

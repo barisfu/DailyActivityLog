@@ -1,4 +1,5 @@
 <resources>
+    <string name="google_maps_api_key">AIzaSyA_vTspKZSfca6lBFqQ467SDPB8gW8DAxA</string>
     <string name="app_name">Daily Activity Log</string>
     <string name="log_title_hint">Enter a name for the activity.</string>
     <string name="log_title_label">Title</string>
@@ -30,7 +31,7 @@
     <string name="text_save_user">Save User</string>
     <string name="text_comment_section"><b>Comment</b></string>
     <string name="text_add_user_section"><b>Create a new user here</b></string>
-    <string name="text_log_location">Location: </string>
+    <string name="button_log_location">Location</string>
 
     <string-array name="gender_array">
         <item>Male</item>
@@ -43,6 +44,9 @@
         <item>Leisure</item>
         <item>Sport</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
