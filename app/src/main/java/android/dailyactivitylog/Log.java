@@ -1,6 +1,9 @@
 package android.dailyactivitylog;
 
+import android.location.Location;
 import android.text.format.DateFormat;
+
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
@@ -10,13 +13,15 @@ import java.util.UUID;
  * YOU ARE UP TO PAGE 292
  */
 
-public class Log {
+public class Log implements Serializable{
     private UUID mId;
     private String mTitle;
     private String mCommentSection;
     private Date mDate;
     private String mFormattedDate;
     private String mCategory;
+    private double mLocationLat;
+    private double mLocationLon;
     private boolean mIsDataSaved;
 
     public Log() {
@@ -28,6 +33,22 @@ public class Log {
         mId = id;
         mDate = new Date();
         mFormattedDate = DateFormat.format("dd-MM-yyyy", mDate).toString();
+    }
+
+    public void setLocationLat(double lat) {
+        mLocationLat = lat;
+    }
+
+    public double getLocationLat() {
+        return mLocationLat;
+    }
+
+    public void setLocationLon(double lon) {
+        mLocationLon = lon;
+    }
+
+    public double getLocationLon() {
+        return mLocationLon;
     }
 
     public void setCategory(String category){

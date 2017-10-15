@@ -80,6 +80,8 @@ public class LogStore {
          values.put(LogTable.Cols.TITLE, log.getTitle());
          values.put(LogTable.Cols.DATE, log.getDate().getTime());
          values.put(LogTable.Cols.COMMENT, log.getCommentSection());
+         values.put(LogTable.Cols.LOCATION_LAT, log.getLocationLat());
+         values.put(LogTable.Cols.LOCATION_LON, log.getLocationLon());
 
          return values;
      }

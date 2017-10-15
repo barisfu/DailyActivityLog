@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,9 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.Date;
@@ -95,7 +92,15 @@ public class LogFragment extends Fragment {
         mLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((LogActivity)getActivity()).replaceFragments(GmapFragment.class);
+                GoogleMapFragment googleMapFragment = new GoogleMapFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("mLog", mLog);
+                googleMapFragment.setArguments(bundle);
+                FragmentManager manager = getFragmentManager();
+                manager.beginTransaction().replace(R.id.fragment_container, googleMapFragment)
+                        .addToBackStack("LogFragment")
+                        .commit();
             }
         });
 

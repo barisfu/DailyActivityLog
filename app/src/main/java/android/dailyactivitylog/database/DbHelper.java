@@ -29,7 +29,9 @@ public class DbHelper extends SQLiteOpenHelper {
                 LogTable.Cols.TITLE + ", " +
                 LogTable.Cols.DATE + ", " +
                 LogTable.Cols.CATEGORY + "," +
-                LogTable.Cols.COMMENT +
+                LogTable.Cols.COMMENT + ", " +
+                LogTable.Cols.LOCATION_LAT + ", " +
+                LogTable.Cols.LOCATION_LON +
                 ")"
         );
         db.execSQL("create table " + DbSchemas.UserTable.NAME + "(" +

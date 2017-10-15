@@ -15,6 +15,8 @@ public class DbSchemas {
             public static final String DATE = "date";
             public static final String COMMENT = "comment";
             public static final String CATEGORY = "category";
+            public static final String LOCATION_LAT = "locationLatitude";
+            public static final String LOCATION_LON = "locationLongitude";
         }
     }
 

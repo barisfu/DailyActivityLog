@@ -6,12 +6,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.MenuItem;
-
 import java.util.UUID;
 
 public class LogActivity extends SingleFragmentActivity {
 
+    GoogleMapFragment mapFragment;
     private static final String EXTRA_LOG_ID = "android.dailyactivitylog.log_id";
+    private static final String LOG_DETAILS = "Log";
+
 
     @Override
     protected Fragment createFragment() {
@@ -28,25 +30,6 @@ public class LogActivity extends SingleFragmentActivity {
         return intent;
     }
 
-
-    /**
-     * Method to replace LogFragtment with GMapFragment
-     * @param newFragmentClass
-     */
-    public void replaceFragments(Class newFragmentClass) {
-        Fragment newFragment = null;
-
-        try {
-            newFragment = (Fragment) newFragmentClass.newInstance();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_container, newFragment)
-                .addToBackStack(null)
-                .commit();
-    }
 
     @Override
     public void onBackPressed(){
@@ -69,4 +52,16 @@ public class LogActivity extends SingleFragmentActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        if (requestCode == GoogleMapFragment.MY_PERMISSIONS_REQUEST_LOCATION){
+            mapFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+        else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
 }
