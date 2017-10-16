@@ -76,13 +76,11 @@ public class LogListFragment extends Fragment {
         private Log mLog;
         private TextView mTitleTextView;
         private TextView mDateTextView;
-        private TextView mLocationTextView;
 
         public LogHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
 
-            mLocationTextView = (TextView)itemView.findViewById(R.id.list_item_location_text_view);
             mTitleTextView = (TextView)itemView.findViewById(R.id.list_item_log_title_text_view);
             mDateTextView = (TextView)itemView.findViewById(R.id.list_item_log_date_text_view);
         }
@@ -91,7 +89,6 @@ public class LogListFragment extends Fragment {
             mLog = log;
             mTitleTextView.setText(mLog.getTitle());
             mDateTextView.setText(mLog.getFormattedDate());
-            mLocationTextView.setText(mLog.getAddress());
         }
 
         @Override

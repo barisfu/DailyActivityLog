@@ -34,6 +34,8 @@
     <string name="button_log_location">Get Your Location</string>
     <string name="text_location_text">Location: </string>
     <string name="text_category"><b>Type of Activity:</b></string>
+    <string name="text_duration">Duration: </string>
+    <string name="text_enter_duration">Enter Duration Here</string>
 
     <string-array name="gender_array">
         <item>Male</item>

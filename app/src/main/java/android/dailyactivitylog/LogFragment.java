@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,13 +22,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.File;
 import java.util.Date;
 import java.util.UUID;
@@ -47,7 +48,7 @@ public class LogFragment extends Fragment {
     private File mPhotoFile;
     private Spinner mCategorySpinner;
     private TextView mLocationText;
-    private GoogleMapFragment mMapFragment;
+    private EditText mDuration;
     private static final String ARG_LOG_ID = "log_id";
     private static final String DIALOG_DATE = "DialogDate";
     private static final int REQUEST_DATE = 0;
@@ -106,9 +107,28 @@ public class LogFragment extends Fragment {
             }
         });
 
+        mDuration = (EditText)v.findViewById(R.id.edittext_duration);
+        mDuration.setText(mLog.getDuration());
+        mDuration.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                mLog.setDuration(editable.toString());
+            }
+        });
+
+
         mLocationText = (TextView)v.findViewById(R.id.textview_display_location);
         mLocationText.setText(mLog.getAddress());
-
 
         mCategorySpinner = (Spinner)v.findViewById(R.id.categories_spinner);
         final ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this.getContext(),
@@ -236,7 +256,6 @@ public class LogFragment extends Fragment {
         super.onPause();
         LogStore.get(getActivity())
                 .updateLog(mLog);
-        Toast.makeText(getActivity(), R.string.log_saved_confirmation, Toast.LENGTH_SHORT).show();
     }
 
     @Override

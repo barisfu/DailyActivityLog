@@ -24,6 +24,7 @@ public class Log implements Serializable{
     private double mLocationLat;
     private double mLocationLon;
     private boolean mIsDataSaved;
+    private String mDuration;
 
     public Log() {
         //Generate unique identifier
@@ -34,6 +35,14 @@ public class Log implements Serializable{
         mId = id;
         mDate = new Date();
         mFormattedDate = DateFormat.format("dd-MM-yyyy", mDate).toString();
+    }
+
+    public void setDuration(String duration) {
+        mDuration = duration;
+    }
+
+    public String getDuration() {
+        return mDuration;
     }
 
     public void setAddress(String address) {

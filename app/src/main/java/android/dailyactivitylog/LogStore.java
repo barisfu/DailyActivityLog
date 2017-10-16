@@ -83,6 +83,7 @@ public class LogStore {
          values.put(LogTable.Cols.LOCATION_LAT, log.getLocationLat());
          values.put(LogTable.Cols.LOCATION_LON, log.getLocationLon());
          values.put(LogTable.Cols.LOCATION_ADDRESS, log.getAddress());
+         values.put(LogTable.Cols.DURATION, log.getDuration());
 
          return values;
      }

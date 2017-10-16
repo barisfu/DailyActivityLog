@@ -18,7 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
+
     <RelativeLayout
+        android:id="@+id/first_custom_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -59,9 +61,34 @@
             android:layout_below="@+id/textview_type_of_activity"
             android:layout_marginTop="3dp"
             android:layout_marginLeft="80dp"/>
-
     </RelativeLayout>
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp">
+
+        <TextView
+            android:id="@+id/textview_duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="260dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/text_duration"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/edittext_duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="1dp"
+            android:layout_marginLeft="80dp"
+            android:hint="@string/text_enter_duration"
+            android:layout_marginRight="130dp"
+            android:textSize="13dp"/>
+    </RelativeLayout>
 
 
     <EditText
@@ -71,4 +98,5 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:hint="@string/edittext_comment_section"/>
+
 </LinearLayout>
