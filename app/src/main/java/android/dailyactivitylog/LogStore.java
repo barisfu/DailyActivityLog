@@ -76,12 +76,13 @@ public class LogStore {
      private static ContentValues getContentValues(Log log) {
          ContentValues values = new ContentValues();
          values.put(LogTable.Cols.UUID, log.getId().toString());
-         values.put(LogTable.Cols.CATEGORY, log.getCategory());
+         values.put(LogTable.Cols.CATEGORY, log.getCategoryPosition());
          values.put(LogTable.Cols.TITLE, log.getTitle());
          values.put(LogTable.Cols.DATE, log.getDate().getTime());
          values.put(LogTable.Cols.COMMENT, log.getCommentSection());
          values.put(LogTable.Cols.LOCATION_LAT, log.getLocationLat());
          values.put(LogTable.Cols.LOCATION_LON, log.getLocationLon());
+         values.put(LogTable.Cols.LOCATION_ADDRESS, log.getAddress());
 
          return values;
      }

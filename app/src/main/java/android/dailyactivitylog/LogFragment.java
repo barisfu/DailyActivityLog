@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -40,12 +41,13 @@ public class LogFragment extends Fragment {
     private EditText mTitleField;
     private EditText mComment;
     private Button mDateButton;
-    private Button mSaveButton;
     private Button mLocationButton;
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
     private File mPhotoFile;
     private Spinner mCategorySpinner;
+    private TextView mLocationText;
+    private GoogleMapFragment mMapFragment;
     private static final String ARG_LOG_ID = "log_id";
     private static final String DIALOG_DATE = "DialogDate";
     private static final int REQUEST_DATE = 0;
@@ -83,6 +85,7 @@ public class LogFragment extends Fragment {
         mPhotoFile = LogStore.get(getActivity()).getPhotoFile(mLog);
     }
 
+
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_log, container, false);
@@ -93,7 +96,6 @@ public class LogFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 GoogleMapFragment googleMapFragment = new GoogleMapFragment();
-
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("mLog", mLog);
                 googleMapFragment.setArguments(bundle);
@@ -104,23 +106,28 @@ public class LogFragment extends Fragment {
             }
         });
 
+        mLocationText = (TextView)v.findViewById(R.id.textview_display_location);
+        mLocationText.setText(mLog.getAddress());
+
 
         mCategorySpinner = (Spinner)v.findViewById(R.id.categories_spinner);
         final ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this.getContext(),
                 R.array.categories_array, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         mCategorySpinner.setAdapter(spinnerAdapter);
+        mCategorySpinner.setSelection(mLog.getCategoryPosition());
         mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i == 0) {
-                    mLog.setCategory(adapterView.getItemAtPosition(0).toString());
+                    mLog.setCategoryPosition(i);
                 } else if (i == 1) {
-                    mLog.setCategory(adapterView.getItemAtPosition(1).toString());
+                    mLog.setCategoryPosition(i);
                 } else if (i == 2) {
-                    mLog.setCategory(adapterView.getItemAtPosition(2).toString());
+                    mLog.setCategoryPosition(i);
                 } else if (i == 3) {
-                    mLog.setCategory(adapterView.getItemAtPosition(3).toString());
+                    mLog.setCategoryPosition(i);
                 }
             }
 
@@ -140,7 +147,7 @@ public class LogFragment extends Fragment {
                 DatePickerFragment dialog = DatePickerFragment.newInstance(mLog.getDate());
                 dialog.setTargetFragment(LogFragment.this, REQUEST_DATE);
                 dialog.show(manager, DIALOG_DATE);
-                Toast.makeText(getActivity(), mLog.getCategory(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), mLog.getCategoryPosition(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -182,16 +189,6 @@ public class LogFragment extends Fragment {
             }
         });
 
-        mSaveButton = (Button)v.findViewById(R.id.save_log_button);
-        mSaveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), R.string.log_saved_confirmation, Toast.LENGTH_SHORT).show();
-                setSaveButton();
-
-            }
-        });
-
         mPhotoButton = (ImageButton) v.findViewById(R.id.log_camera);
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         boolean canTakePhoto = mPhotoFile != null &&
@@ -212,15 +209,6 @@ public class LogFragment extends Fragment {
         updatePhotoView();
 
         return v;
-    }
-
-    /**
-     * Creates a method for the save button to be used to bring the user back
-     * to the Log List Activity.
-     */
-    public void setSaveButton() {
-        Intent intent = new Intent (this.getContext(), LogListActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -248,6 +236,7 @@ public class LogFragment extends Fragment {
         super.onPause();
         LogStore.get(getActivity())
                 .updateLog(mLog);
+        Toast.makeText(getActivity(), R.string.log_saved_confirmation, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -273,5 +262,4 @@ public class LogFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

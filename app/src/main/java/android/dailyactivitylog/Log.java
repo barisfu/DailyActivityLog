@@ -19,7 +19,8 @@ public class Log implements Serializable{
     private String mCommentSection;
     private Date mDate;
     private String mFormattedDate;
-    private String mCategory;
+    private int mCategorySpinnerLocation;
+    private String mAddress;
     private double mLocationLat;
     private double mLocationLon;
     private boolean mIsDataSaved;
@@ -33,6 +34,14 @@ public class Log implements Serializable{
         mId = id;
         mDate = new Date();
         mFormattedDate = DateFormat.format("dd-MM-yyyy", mDate).toString();
+    }
+
+    public void setAddress(String address) {
+        mAddress = address;
+    }
+
+    public String getAddress (){
+        return mAddress;
     }
 
     public void setLocationLat(double lat) {
@@ -51,12 +60,12 @@ public class Log implements Serializable{
         return mLocationLon;
     }
 
-    public void setCategory(String category){
-        mCategory = category;
+    public void setCategoryPosition(int category){
+        mCategorySpinnerLocation = category;
     }
 
-    public String getCategory(){
-        return mCategory;
+    public int getCategoryPosition(){
+        return mCategorySpinnerLocation;
     }
 
     public UUID getId() {

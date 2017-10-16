@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
               android:id="@+id/fragment_log"
               android:orientation="vertical"
               android:layout_width="match_parent"
@@ -12,37 +11,64 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="@string/details_label"/>
+        android:text="@string/details_label"
+        android:textStyle="bold"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
-
-    <Button
-        android:id="@+id/date_button"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:text="@string/date_button_label"/>
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textview_type_of_activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="230dp"
+            android:layout_marginTop="3dp"
+            android:text="@string/text_category"
+            android:textStyle="bold"/>
+
+        <Spinner
+            android:id="@+id/categories_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="150dp"
+            android:entries="@array/categories_array">
+        </Spinner>
+
+        <TextView
+            android:id="@+id/textview_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textview_type_of_activity"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="260dp"
+            android:text="@string/text_location_text"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/textview_display_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textview_type_of_activity"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="80dp"/>
+
+    </RelativeLayout>
+
+
 
     <EditText
         android:id="@+id/comment_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:hint="@string/edittext_comment_section"/>
-
-    <Button
-        android:id="@+id/save_log_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="220dp"
-        android:text="@string/save_log_button"
-        android:background="@android:color/holo_green_dark"/>
 </LinearLayout>

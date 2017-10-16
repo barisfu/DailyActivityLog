@@ -21,7 +21,8 @@ public class LogCursorWrapper extends CursorWrapper {
         String uuidString = getString(getColumnIndex(LogTable.Cols.UUID));
         String title = getString(getColumnIndex(LogTable.Cols.TITLE));
         String comment = getString(getColumnIndex(LogTable.Cols.COMMENT));
-        String category = getString(getColumnIndex(LogTable.Cols.CATEGORY));
+        int category = getInt(getColumnIndex(LogTable.Cols.CATEGORY));
+        String address = getString(getColumnIndex(LogTable.Cols.LOCATION_ADDRESS));
         long date = getLong(getColumnIndex(LogTable.Cols.DATE));
         double latitude = getDouble(getColumnIndex(LogTable.Cols.LOCATION_LAT));
         double longitude = getDouble(getColumnIndex(LogTable.Cols.LOCATION_LON));
@@ -30,9 +31,10 @@ public class LogCursorWrapper extends CursorWrapper {
         log.setCommentSection(comment);
         log.setTitle(title);
         log.setDate(new Date(date));
-        log.setCategory(category);
+        log.setCategoryPosition(category);
         log.setLocationLat(latitude);
         log.setLocationLon(longitude);
+        log.setAddress(address);
 
         return log;
     }

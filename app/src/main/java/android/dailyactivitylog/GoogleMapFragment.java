@@ -2,14 +2,17 @@ package android.dailyactivitylog;
 
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import android.location.Address;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -23,6 +26,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import android.Manifest.permission;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -40,6 +47,19 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
     private Location mLastLocation;
     private Marker mCurrLocationMarker;
     private Log mLog;
+    private Geocoder mGeocoder;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        //Retrieves mLog object from LogFragment.
+        Bundle bundle = getArguments();
+        if(bundle != null) {
+            mLog = (Log)bundle.getSerializable("mLog");
+        }
+        android.util.Log.d("onCreate", "FOR GOOGLEMAP");
+    }
 
     @Override
     public void onResume() {
@@ -77,20 +97,12 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
                 //Location Permission already granted
                 buildGoogleApiClient();
                 mGoogleMap.setMyLocationEnabled(true);
-            } else {
-                //Request Location Permission
-                checkLocationPermission();
-                }
+            }
         }
             else {
                 buildGoogleApiClient();
                 mGoogleMap.setMyLocationEnabled(true);
             }
-        //Retrieves mLog object from LogFragment.
-        Bundle bundle = getArguments();
-        if(bundle != null) {
-            mLog = (Log)bundle.getSerializable("mLog");
-        }
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -105,7 +117,7 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
     @Override
     public void onConnected(Bundle bundle) {
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(1000);
+        mLocationRequest.setInterval(100);
         mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
@@ -124,11 +136,18 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
     @Override
     public void onLocationChanged(Location location) {
         mLastLocation = location;
+        mGeocoder = new Geocoder(this.getContext(), Locale.getDefault());
+        List<Address> addresses = null;
 
         if (mCurrLocationMarker != null) {
              mCurrLocationMarker.remove();
         }
 
+        //Checks to see if Latitude and Longitude are saved in Log object.
+        if(mLog.getLocationLat() != 0.0 && mLog.getLocationLon() != 0.0) {
+            mLastLocation.setLatitude(mLog.getLocationLat());
+            mLastLocation.setLongitude(mLog.getLocationLon());
+        }
         //Place current location marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
@@ -139,46 +158,21 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
 
         //move map camera
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11));
-
         mLog.setLocationLat(mLastLocation.getLatitude());
         mLog.setLocationLon(mLastLocation.getLongitude());
+
+        //Adds the address to Log instance.
+        try {
+            addresses = mGeocoder.getFromLocation(mLastLocation.getLatitude(),
+                    mLastLocation.getLongitude(), 1);
+        } catch (IOException ioException) {
+            android.util.Log.e("Geocoder", "error");
+        }
+        mLog.setAddress(addresses.get(0).getAddressLine(0));
+        android.util.Log.d("AddressSet", mLog.getAddress());
     }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-
-    private void checkLocationPermission() {
-            if (ContextCompat.checkSelfPermission(getActivity(), permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
-
-                // Should we show an explanation?
-                if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
-                permission.ACCESS_FINE_LOCATION)) {
-
-                    // Show an explanation to the user *asynchronously* -- don't block
-                    // this thread waiting for the user's response! After the user
-                    // sees the explanation, try again to request the permission.
-                    new AlertDialog.Builder(getActivity())
-                    .setTitle("Location Permission Needed")
-                    .setMessage("This app needs the Location permission, please accept to use location functionality")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                                //Prompt the user once explanation has been shown
-                                ActivityCompat.requestPermissions(getActivity(),
-                                new String[]{permission.ACCESS_FINE_LOCATION},
-                                MY_PERMISSIONS_REQUEST_LOCATION );
-                                }
-                                })
-                                .create()
-                                .show();
-                } else {
-                    // No explanation needed, we can request the permission.
-                    ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_LOCATION );
-                }
-            }
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
