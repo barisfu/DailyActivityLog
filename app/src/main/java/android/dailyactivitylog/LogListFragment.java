@@ -71,6 +71,7 @@ public class LogListFragment extends Fragment {
     private class LogHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private Log mLog;
         private TextView mTitleTextView;
+        private TextView mLocationTextView;
         private TextView mDateTextView;
 
         public LogHolder(View itemView) {
@@ -78,12 +79,14 @@ public class LogListFragment extends Fragment {
             itemView.setOnClickListener(this);
 
             mTitleTextView = (TextView)itemView.findViewById(R.id.list_item_log_title_text_view);
+            mLocationTextView = (TextView)itemView.findViewById(R.id.list_item_location_text_view);
             mDateTextView = (TextView)itemView.findViewById(R.id.list_item_log_date_text_view);
         }
 
         public void bindLog(Log log) {
             mLog = log;
             mTitleTextView.setText(mLog.getTitle());
+            mLocationTextView.setText(mLog.getAddress());
             mDateTextView.setText(mLog.getFormattedDate());
         }
 

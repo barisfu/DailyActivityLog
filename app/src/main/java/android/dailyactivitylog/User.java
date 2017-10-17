@@ -1,9 +1,5 @@
 package android.dailyactivitylog;
 
-import android.dailyactivitylog.database.DbHelper;
-
-import java.util.UUID;
-
 /**
  * Created by Mack on 09-Oct-17.
  */
