@@ -31,20 +31,6 @@ public class UserStore {
         mDatabase = new DbHelper(mContext).getWritableDatabase();
     }
 
-    public List<User> getUsers() {
-        List<User> users = new ArrayList<>();
-        UserCursorWrapper cursor = queryUsers(null, null);
-        try{
-            cursor.moveToFirst();
-            while(!cursor.isAfterLast()) {
-                users.add(cursor.getUser());
-                cursor.moveToNext();
-            }
-        } finally {
-            cursor.close();
-        }
-    return users;
-    }
 
     public User getUser(String id) {
         UserCursorWrapper cursor = queryUsers(

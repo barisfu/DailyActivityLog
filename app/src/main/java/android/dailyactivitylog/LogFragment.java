@@ -117,12 +117,12 @@ public class LogFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                mLog.setDuration(charSequence.toString());
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                mLog.setDuration(editable.toString());
+
             }
         });
 
@@ -167,7 +167,6 @@ public class LogFragment extends Fragment {
                 DatePickerFragment dialog = DatePickerFragment.newInstance(mLog.getDate());
                 dialog.setTargetFragment(LogFragment.this, REQUEST_DATE);
                 dialog.show(manager, DIALOG_DATE);
-                Toast.makeText(getActivity(), mLog.getCategoryPosition(), Toast.LENGTH_SHORT).show();
             }
         });
 

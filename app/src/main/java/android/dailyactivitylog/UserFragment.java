@@ -47,20 +47,17 @@ public class UserFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_usercreation, container, false);
 
         mDisplayUserId = (TextView)v.findViewById(R.id.textview_id);
-        mDisplayUserId.setText(mUser.getUserId());
+        mDisplayUserId.setText("User ID: " + mUser.getUserId());
 
         mDisplayUserName = (TextView)v.findViewById(R.id.textview_username);
-        mDisplayUserName.setText(mUser.getUserName());
+        mDisplayUserName.setText("User Name: " + mUser.getUserName());
 
         mDisplayUserGender = (TextView)v.findViewById(R.id.textview_gender);
-        mDisplayUserGender.setText(mUser.getUserGender());
+        mDisplayUserGender.setText("Gender: " + mUser.getUserGender());
 
         mDisplayUserEmail = (TextView)v.findViewById(R.id.textview_display_email);
-        mDisplayUserEmail.setText(mUser.getUserEmail());
+        mDisplayUserEmail.setText("Email: " + mUser.getUserEmail());
 
-        final ArrayAdapter<CharSequence> genderSpinnerAdapter = ArrayAdapter.createFromResource
-                (this.getContext(),R.array.gender_array, android.R.layout.
-                        simple_spinner_dropdown_item);
 
         mEnterUserEmail = (EditText)v.findViewById(R.id.edittext_email_entry);
         mEnterUserEmail.addTextChangedListener(new TextWatcher() {
@@ -90,39 +87,35 @@ public class UserFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                mUser.setUserName(charSequence.toString());
+                mDisplayUserName.setText("User name: " + mUser.getUserName());
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                mUser.setUserName(editable.toString());
-                mDisplayUserName.setText("User name: " + mUser.getUserName());
+
             }
         });
 
+        final ArrayAdapter<CharSequence> genderSpinnerAdapter = ArrayAdapter.createFromResource
+                (this.getContext(),R.array.gender_array, android.R.layout.
+                        simple_spinner_dropdown_item);
         mSelectUserGender = (Spinner)v.findViewById(R.id.spinner_select_gender);
         mSelectUserGender.setAdapter(genderSpinnerAdapter);
         mSelectUserGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i == 0) {
-                    mUser.setUserGender("Male");
-                    mDisplayUserGender.setText("Gender: Male");
+                        mUser.setUserGender("Male");
+
                 } else if(i == 1) {
-                    mUser.setUserGender("Female");
-                    mDisplayUserGender.setText("Gender: Female");
+                        mUser.setUserGender("Female");
                 }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                //Intentionally left blank
             }
         });
-
-        mDisplayUserName.setText("Username: " + mUser.getUserName());
-        mDisplayUserGender.setText("Gender: " + mUser.getUserGender());
-        mDisplayUserEmail.setText("Email: " + mUser.getUserEmail());
-        mDisplayUserId.setText("User ID: " + mUser.getUserId());
 
 
         mUserComment = (EditText) v.findViewById(R.id.edittext_user_comment);

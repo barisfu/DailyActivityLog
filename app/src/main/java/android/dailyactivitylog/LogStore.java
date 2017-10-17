@@ -17,9 +17,6 @@ import java.util.UUID;
 /**
  * Created by Mack on 26-Sep-17.
  */
- /**
-  * SAME AS CRIMELAB CLASS
-  */
 public class LogStore {
     private static LogStore sLogList;
     private Context mContext;
@@ -78,7 +75,7 @@ public class LogStore {
          values.put(LogTable.Cols.UUID, log.getId().toString());
          values.put(LogTable.Cols.CATEGORY, log.getCategoryPosition());
          values.put(LogTable.Cols.TITLE, log.getTitle());
-         values.put(LogTable.Cols.DATE, log.getDate().getTime());
+         values.put(LogTable.Cols.DATE, log.getFormattedDate());
          values.put(LogTable.Cols.COMMENT, log.getCommentSection());
          values.put(LogTable.Cols.LOCATION_LAT, log.getLocationLat());
          values.put(LogTable.Cols.LOCATION_LON, log.getLocationLon());
@@ -99,13 +96,13 @@ public class LogStore {
      private LogCursorWrapper queryLogs(String whereClause, String[] whereArgs) {
          Cursor cursor = mDatabase.query(
                  LogTable.NAME,
-                 null, // Columns - null selects all columns
+                 null,
                  whereClause,
                  whereArgs,
-                 null, // groupBy
-                 null, // having
-                 null, // orderBy
-                 null //
+                 null,
+                 null,
+                 null,
+                 null
          );
          return new LogCursorWrapper(cursor);
      }

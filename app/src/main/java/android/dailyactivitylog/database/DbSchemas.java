@@ -8,7 +8,6 @@ public class DbSchemas {
     public static final class LogTable {
         public static final String NAME = "logs";
 
-
         public static final class Cols {
             public static final String UUID = "uuid";
             public static final String TITLE = "title";

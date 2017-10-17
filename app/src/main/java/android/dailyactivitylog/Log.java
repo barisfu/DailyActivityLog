@@ -1,8 +1,6 @@
 package android.dailyactivitylog;
 
-import android.location.Location;
 import android.text.format.DateFormat;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
@@ -23,7 +21,6 @@ public class Log implements Serializable{
     private String mAddress;
     private double mLocationLat;
     private double mLocationLon;
-    private boolean mIsDataSaved;
     private String mDuration;
 
     public Log() {
@@ -109,16 +106,12 @@ public class Log implements Serializable{
         return mFormattedDate;
     }
 
+    public void setFormattedDate(String date) {
+        mFormattedDate = date;
+    }
+
     public void updateFormattedDate(){
         mFormattedDate = DateFormat.format("dd-MM-yyyy", mDate).toString();
-    }
-
-    public void setDataSaved(boolean dataSaved) {
-        mIsDataSaved = dataSaved;
-    }
-
-    public boolean getDataSaved(){
-        return mIsDataSaved;
     }
 
     public String getPhotoFilename() {

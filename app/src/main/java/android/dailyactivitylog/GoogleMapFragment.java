@@ -1,15 +1,11 @@
 package android.dailyactivitylog;
 
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import android.location.Address;
@@ -26,7 +22,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import android.Manifest.permission;
 import android.widget.Toast;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -68,6 +63,10 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
         setUpMapIfNeeded();
         }
 
+
+    /**
+     * Sets up the map if mGooglemap is null.
+     */
     private void setUpMapIfNeeded() {
         if (mGoogleMap == null) {
         getMapAsync(this);
@@ -78,7 +77,7 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
     public void onPause() {
         super.onPause();
 
-        //stop location updates when Activity is no longer active
+        //Stops location updates when no longer active.
         if (mGoogleApiClient != null) {
         LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
@@ -94,7 +93,6 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
             if (ContextCompat.checkSelfPermission(getActivity(),
                 permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-                //Location Permission already granted
                 buildGoogleApiClient();
                 mGoogleMap.setMyLocationEnabled(true);
             }
@@ -105,6 +103,9 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
             }
     }
 
+    /**
+     * Builds the google API Client
+     */
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
         .addConnectionCallbacks(this)
@@ -143,7 +144,8 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
              mCurrLocationMarker.remove();
         }
 
-        //Checks to see if Latitude and Longitude are saved in Log object.
+        //Checks to see if Latitude and Longitude are already saved in Log object
+        // and then retrieves location of the saved Lat and Lon to display on map.
         if(mLog.getLocationLat() != 0.0 && mLog.getLocationLon() != 0.0) {
             mLastLocation.setLatitude(mLog.getLocationLat());
             mLastLocation.setLongitude(mLog.getLocationLon());
@@ -156,7 +158,7 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
         mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
 
-        //move map camera
+        //Move map camera
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11));
         mLog.setLocationLat(mLastLocation.getLatitude());
         mLog.setLocationLon(mLastLocation.getLongitude());
@@ -183,8 +185,7 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
                     if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                        // permission was granted, yay! Do the
-                        // location-related task you need to do.
+                        // Checks permission was granted and the google map can be built.
                         if (ContextCompat.checkSelfPermission(getActivity(),
                         permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
@@ -196,16 +197,11 @@ public class GoogleMapFragment extends SupportMapFragment implements OnMapReadyC
                         }
 
                     } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    // Permission is denied.
                     Toast.makeText(getActivity(), "permission denied", Toast.LENGTH_LONG).show();
                     }
                     return;
                 }
-
-                // other 'case' lines to check for other
-                // permissions this app might request
             }
         }
 
