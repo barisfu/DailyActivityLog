@@ -7,8 +7,6 @@ import android.dailyactivitylog.database.UserCursorWrapper;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.dailyactivitylog.database.DbSchemas.UserTable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by mdc010 on 12/10/2017.

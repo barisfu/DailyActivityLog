@@ -8,7 +8,6 @@ import android.dailyactivitylog.database.DbSchemas.LogTable;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
